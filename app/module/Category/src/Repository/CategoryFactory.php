@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Category\Repository;
 
+use Category\Utils\File\JSONReader;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 

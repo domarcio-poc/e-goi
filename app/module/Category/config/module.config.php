@@ -7,10 +7,16 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ],
     ],
     'controllers' => [
+        'invokables' => [
+            Category\Controller\Categories::class => Category\Controller\Categories::class,
+        ],
         'factories' => [
-            Category\Controller\Categories::class => Category\Controller\CategoriesFactory::class,
+            Category\API\Category::class => Category\API\CategoryFactory::class,
         ],
     ],
     'service_manager' => [
@@ -27,14 +33,26 @@ return [
                     'defaults' => [
                         'controller' => Category\Controller\Categories::class,
                         'action'     => 'index',
+                    ],
+                ],
+            ],
+            'restful_category' => [
+                'type' => 'segment',
+                'options' => [
+                    'route'    => '/category[/:id]',
+                    'constraints' => [
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Category\API\Category::class,
                     ]
-                ]
-            ]
-        ]
+                ],
+            ],
+        ],
     ],
     'db' => [
         'inmemo' => [
-            'filename' => getcwd() . '/app/data/storage/foobar.json',
+            'filename' => getcwd() . '/data/storage/categories.json',
         ],
     ],
 ];

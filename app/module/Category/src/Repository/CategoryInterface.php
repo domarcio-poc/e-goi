@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Category\Repository;
 
 use Category\Entity;
+use Zend\Paginator\Paginator;
 
 interface CategoryInterface
 {
     public function get(int $id): ?Entity\Category;
 
-    public function all(): Entity\CategoryIterator;
+    public function all(?int $offset = 0, ?int $limit = 5): Paginator;
 
     public function delete(int $id): bool;
 

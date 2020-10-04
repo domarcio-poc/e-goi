@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace CategoryTest\Repository;
 
 use Category\Entity\Category;
-use Category\Entity\CategoryIterator;
 use Category\Repository\CategoryJSONFile;
 use PHPUnit\Framework\TestCase;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Zend\Paginator\Paginator;
 
 final class CategoryJSONFileTest extends TestCase
 {
-
     public function testGetSuccessfull()
     {
         $expected = new Category(1001);
@@ -36,10 +36,11 @@ final class CategoryJSONFileTest extends TestCase
         $repository->expects($this->once())
             ->method('get')
             ->with(1001)
-            ->willReturn(null);
+            ->willThrowException(new \Exception('Category not found'));
 
-        $result = $repository->get(1001);
-        $this->assertNull($result);
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Category not found');
+        $repository->get(1001);
     }
 
     public function testAllSuccessfull()
@@ -52,12 +53,12 @@ final class CategoryJSONFileTest extends TestCase
         $repository = $this->createMock(CategoryJSONFile::class);
         $repository->expects($this->once())
             ->method('all')
-            ->willReturn(new CategoryIterator([$expected]));
+            ->willReturn(new Paginator(new ArrayAdapter([$expected])));
 
         $result = $repository->all();
-        $this->assertCount(1, $result);
+        $this->assertEquals(1, $result->count());
 
-        $currentCat = $result->current();
+        $currentCat = $result->getCurrentItems()['0'];
         $this->assertEquals(1001, $currentCat->getID());
         $this->assertEquals('foo', $currentCat->getName());
     }
@@ -67,13 +68,10 @@ final class CategoryJSONFileTest extends TestCase
         $repository = $this->createMock(CategoryJSONFile::class);
         $repository->expects($this->once())
             ->method('all')
-            ->willReturn(new CategoryIterator([]));
+            ->willReturn(new Paginator(new ArrayAdapter([])));
 
         $result = $repository->all();
-        $this->assertCount(0, $result);
-
-        $currentCat = $result->current();
-        $this->assertNull($currentCat);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testDeleteSuccessfull()
@@ -88,16 +86,17 @@ final class CategoryJSONFileTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testDeleteUnsuccessfull()
+    public function testDeleteUnsuccessful()
     {
         $repository = $this->createMock(CategoryJSONFile::class);
         $repository->expects($this->once())
             ->method('delete')
             ->with(1001)
-            ->willReturn(false);
+            ->willThrowException(new \Exception('Category not found'));
 
-        $result = $repository->delete(1001);
-        $this->assertFalse($result);
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Category not found');
+        $repository->delete(1001);
     }
 
     public function testUpdateSuccessfull()
@@ -118,10 +117,11 @@ final class CategoryJSONFileTest extends TestCase
         $repository->expects($this->once())
             ->method('update')
             ->with(1001, 'XPTO')
-            ->willReturn(0);
+            ->willThrowException(new \Exception('Category not found'));
 
-        $result = $repository->update(1001, 'XPTO');
-        $this->assertEquals(0, $result);
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Category not found');
+        $repository->update(1001, 'XPTO');
     }
 
     public function testCreateSuccessfull()
@@ -147,10 +147,10 @@ final class CategoryJSONFileTest extends TestCase
         $repository->expects($this->once())
             ->method('create')
             ->with('XPTO')
-            ->willThrowException(new \Exception("XPTO category already exists"));
+            ->willThrowException(new \Exception('XPTO category already exists'));
 
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("XPTO category already exists");
+        $this->expectExceptionMessage('XPTO category already exists');
         $repository->create('XPTO');
     }
 }

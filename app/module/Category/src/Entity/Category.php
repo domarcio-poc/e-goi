@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Category\Entity;
 
-use \DateTime;
+use DateTime;
 
 class Category
 {
@@ -36,9 +36,12 @@ class Category
         return $this->name;
     }
 
-    public function setCreatedAt(): void
+    public function setCreatedAt(?DateTime $createdAt = null): void
     {
-        $this->createdAt = new DateTime('now');
+        if ($createdAt === null) {
+            $createdAt = new DateTime('now');
+        }
+        $this->createdAt = $createdAt;
     }
 
     public function getCreatedAt(): DateTime
@@ -46,13 +49,26 @@ class Category
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(): void
+    public function setUpdatedAt(?DateTime $updatedAt = null): void
     {
-        $this->updatedAt = new DateTime('now');
+        if ($updatedAt === null) {
+            $updatedAt = new DateTime('now');
+        }
+        $this->updatedAt = $updatedAt;
     }
 
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    public function getArrayCopy(): array
+    {
+        return [
+            'id'         => $this->getID(),
+            'name'       => $this->getName(),
+            'created_at' => $this->getCreatedAt()->format(DateTime::RFC3339_EXTENDED),
+            'updated_at' => $this->getUpdatedAt()->format(DateTime::RFC3339_EXTENDED),
+        ];
     }
 }
