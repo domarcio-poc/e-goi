@@ -1,2 +1,0 @@
-#!/bin/bash
-./app/vendor/bin/phpunit --stop-on-failure ./app/module/Category/test/
