@@ -1,0 +1,9 @@
+#!/bin/bash
+podman build --no-cache -t e-goi-app -f ${PWD}/container/php/Dockerfile
+
+podman run -it --rm --name e-goi-app \
+    -p 8080:80 \
+    -v ${PWD}/app:/app \
+    -v ${PWD}/container/php/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini \
+    -e PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d/:/etc/php/7.4/fpm/conf.d/ \
+    e-goi-app
