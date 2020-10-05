@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Paginator\Paginator;
 
-final class CategoryJSONFileTest extends TestCase
+class CategoryJSONFileTest extends TestCase
 {
     public function testGetSuccessfull()
     {

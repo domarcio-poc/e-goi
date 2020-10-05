@@ -7,7 +7,7 @@ namespace CategoryTest\Repository;
 use Category\Repository\CategoryInterface;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-final class CategoryFactoryTest extends AbstractHttpControllerTestCase
+class CategoryFactoryTest extends AbstractHttpControllerTestCase
 {
     protected function setUp(): void
     {

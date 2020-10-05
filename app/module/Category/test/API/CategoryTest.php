@@ -7,7 +7,7 @@ namespace CategoryTest\Controller;
 use Zend\Http\Request;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-final class CategoryTest extends AbstractHttpControllerTestCase
+class CategoryTest extends AbstractHttpControllerTestCase
 {
     protected function setUp(): void
     {
