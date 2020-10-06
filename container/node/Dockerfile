@@ -7,8 +7,9 @@ COPY package.json /usr/src
 RUN npm install
 COPY . /usr/src
 
-RUN npm run build -- --prod --outputPath=./dist/out
+RUN npm run build --dev --configuration=dev --outputPath=./dist/out
+RUN ng serve
 
-FROM nginx:1.19.3
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /usr/src/dist/out/ /usr/share/nginx/html
+#FROM nginx:1.19.3
+#RUN rm -rf /usr/share/nginx/html/*
+#COPY --from=build /usr/src/dist/out/ /usr/share/nginx/html
