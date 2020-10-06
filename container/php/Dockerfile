@@ -18,7 +18,7 @@ COPY . .
 
 COPY --from=composer:1.10.13 /usr/bin/composer /usr/local/bin/composer
 
-RUN composer install
+RUN composer install --no-interaction
 
 EXPOSE 80
 
