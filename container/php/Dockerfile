@@ -3,8 +3,8 @@ FROM php:7.4-cli
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
-RUN apt-get install zip -Y
+RUN apt-get update -y
+RUN apt-get install zip -y
 RUN pecl install xdebug-2.9.8
 RUN docker-php-ext-enable xdebug
 RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
