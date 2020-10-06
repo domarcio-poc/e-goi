@@ -7,10 +7,10 @@ ENV PATH /usr/src/node_modules/.bin:$PATH
 
 COPY package.json /usr/src
 
-RUN npm install
+RUN npm install -g
 
 COPY . /usr/src
 
-EXPOSE 4200/tcp
+EXPOSE 4200
 
-CMD ["npm", "start", "--", "--host", "0.0.0.0", "--poll", "500"]
+CMD ["ng", "serve", "--host", "0.0.0.0"]
