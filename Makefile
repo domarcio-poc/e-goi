@@ -3,8 +3,8 @@
 SHELL = /bin/bash
 
 build:
-	podman build --no-cache -t e-goi-api -f ${PWD}/container/php/Dockerfile ${PWD}/app/api
-	podman build --no-cache -t e-goi-website -f ${PWD}/container/node/Dockerfile ${PWD}/app/website/categories
+	podman build -t e-goi-api -f ${PWD}/container/php/Dockerfile ${PWD}/app/api
+	podman build -t e-goi-website -f ${PWD}/container/node/Dockerfile ${PWD}/app/website/categories
 
 up:
 	podman run -d --rm --name e-goi-api \
@@ -14,7 +14,7 @@ up:
 		-e PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d/:/etc/php/7.4/fpm/conf.d/ \
 		e-goi-api
 
-	podman run -d --rm --name e-goi-website -p 4200:80/tcp e-goi-website
+	podman run -d --rm --name e-goi-website -p 4242:4200 e-goi-website
 	echo "[]" > ./app/api/data/storage/categories.json
 
 stop:
