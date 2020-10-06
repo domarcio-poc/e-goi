@@ -14,7 +14,7 @@ up:
 		-e PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d/:/etc/php/7.4/fpm/conf.d/ \
 		e-goi-api
 
-	podman run -d --rm --name e-goi-website -p 4242:4200 e-goi-website
+	podman run -d --rm --name e-goi-website -p 4242:4200 -v ${PWD}/container/node/nginx.conf:/etc/nginx/conf.d/default.conf e-goi-website
 	echo "[]" > ./app/api/data/storage/categories.json
 
 stop:

@@ -1,16 +1,15 @@
-FROM node:12.18.3
+FROM node:12.18.3 AS build
 
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
 
-ENV PATH /usr/src/node_modules/.bin:$PATH
-
 COPY package.json /usr/src
-
-RUN npm install -g
-
+RUN npm install
 COPY . /usr/src
 
-EXPOSE 4200
+RUN npm run build --dev --configuration=dev --outputPath=./dist/out
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+FROM nginx:1.19.3
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=build /usr/src/dist/out/ /usr/share/nginx/html
+COPY /nginx-custom.conf /etc/nginx/conf.d/default.conf
