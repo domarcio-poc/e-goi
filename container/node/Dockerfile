@@ -12,4 +12,3 @@ RUN npm run build --dev --configuration=dev --outputPath=./dist/out
 FROM nginx:1.19.3
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /usr/src/dist/out/ /usr/share/nginx/html
-COPY /nginx-custom.conf /etc/nginx/conf.d/default.conf
