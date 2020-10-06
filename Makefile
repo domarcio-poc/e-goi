@@ -25,4 +25,3 @@ remove:
 	podman rmi e-goi-api
 	podman rmi e-goi-website
 	echo "[]" > ./app/api/data/storage/categories.json
-	
