@@ -14,6 +14,12 @@ ENV APP_DIR /app
 WORKDIR $APP_DIR
 VOLUME $APP_DIR
 
+COPY . .
+
+COPY --from=composer:1.10.13 /usr/bin/composer /usr/local/bin/composer
+
+RUN composer install
+
 EXPOSE 80
 
-CMD ["php", "-S", "0.0.0.0:80", "-t", "/app/public", "/app/public/index.php"]
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/app/www", "/app/www/index.php"]

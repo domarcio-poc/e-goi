@@ -1,0 +1,20 @@
+<div class="container wrapper">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="inner">
+        <div [hidden]="submitted" style="width: 400px;">
+          <form [formGroup]="categoryForm" (ngSubmit)="submitForm()">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" formControlName="name" class="form-control" maxlength="50">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Create new category!</button>
+        </form>
+        </div>
+        <div [hidden]="!submitted">
+          <h4>You submitted successfully!</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

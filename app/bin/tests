@@ -1,2 +1,0 @@
-#!/bin/bash
-podman exec -it e-goi-app php ./vendor/bin/phpunit -c ./module/Category/test/phpunit.xml --coverage-html public/coverage

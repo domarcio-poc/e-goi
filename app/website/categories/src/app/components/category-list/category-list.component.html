@@ -1,0 +1,56 @@
+<div class="container wrapper">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="inner">
+              <h3>All categories</h3>
+              <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Search categoy name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="align-middle">
+                            <input type="text" name="filter_name" class="form-control" id="filter-name"
+                            [(ngModel)]="filterName"
+                            (keyup)="loadCategories()"
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+              <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Created at</th>
+                          <th scope="col">Last update</th>
+                          <th scope="col"></th>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let category of CategoriesList">
+                          <th scope="row" class="align-middle">{{category.id}}</th>
+                          <td class="align-middle">
+                              <input type="text" name="name" class="form-control" id="input-category-name-{{category.id}}"
+                                [(ngModel)]="category.name"
+                                (keyup.enter)="updateCategory(category.id, category.name)">
+                            </td>
+                          <td class="align-middle">{{category.created_at}}</td>
+                          <td class="align-middle">{{category.updated_at}}</td>
+                          <td class="align-middle text-center">
+                            <button (click)="removeCategory(category.id)" type="button" class="btn btn-danger btn-sm">Remove</button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
