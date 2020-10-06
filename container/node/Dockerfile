@@ -7,7 +7,7 @@ ENV PATH /usr/src/node_modules/.bin:$PATH
 
 COPY package.json /usr/src
 
-RUN npm install -g
+RUN npm install
 
 COPY . /usr/src
 
