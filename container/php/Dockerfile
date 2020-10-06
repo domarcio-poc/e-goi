@@ -4,7 +4,7 @@ FROM php:7.4-cli
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
-#RUN docker-php-ext-install pdo_mysql
+RUN apt-get install zip
 RUN pecl install xdebug-2.9.8
 RUN docker-php-ext-enable xdebug
 RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
