@@ -11,6 +11,6 @@ RUN npm install -g
 
 COPY . /usr/src
 
-EXPOSE 4200
+EXPOSE 4200/tcp
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--poll", "500"]
