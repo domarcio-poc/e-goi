@@ -16,6 +16,5 @@ return [
     'Zend\InputFilter',
     'Zend\Router',
     'Zend\Validator',
-    'Application',
     'Category',
 ];

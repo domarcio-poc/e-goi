@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 return [
     'view_manager' => [
-        'template_path_stack' => [
-            __DIR__ . '/../view',
-        ],
         'strategies' => [
             'ViewJsonStrategy',
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            Category\Controller\Categories::class => Category\Controller\Categories::class,
-        ],
         'factories' => [
             Category\API\Category::class => Category\API\CategoryFactory::class,
         ],
@@ -26,16 +20,6 @@ return [
     ],
     'router' => [
         'routes' => [
-            'categories' => [
-                'type' => 'literal',
-                'options' => [
-                    'route'    => '/categories',
-                    'defaults' => [
-                        'controller' => Category\Controller\Categories::class,
-                        'action'     => 'index',
-                    ],
-                ],
-            ],
             'restful_category' => [
                 'type' => 'segment',
                 'options' => [

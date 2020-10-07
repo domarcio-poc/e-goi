@@ -11,6 +11,7 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": "^7.4",
+        "zendframework/zend-component-installer": "^1.0 || ^2.1",
         "zendframework/zend-mvc": "^3.1.1",
         "zendframework/zend-test": "^3.3",
         "ramsey/uuid": "^4.1",
@@ -20,13 +21,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Application\\": "module/Application/src/",
             "Category\\": "module/Category/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ApplicationTest\\": "module/Application/test/",
             "CategoryTest\\": "module/Category/test/"
         }
     },
