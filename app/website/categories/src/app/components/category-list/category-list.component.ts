@@ -8,10 +8,12 @@ import { Category } from 'src/app/shared/category';
   styleUrls: ['./category-list.component.css']
 })
 export class CategoryListComponent implements OnInit {
+  offset         = 1;
+  pageSize       = 5;
+  collectionSize = 10;
+  filterName     = '';
+
   CategoriesList: Category[];
-  CategoriesListInfo: any;
-  offset = 1;
-  filterName = '';
   newCategoryName: string;
 
   constructor(
@@ -41,13 +43,13 @@ export class CategoryListComponent implements OnInit {
   }
 
   loadCategories() {
-    return this.categoryService.GetList(this.offset, this.filterName).subscribe(
-      (data:any) => {
+    return this.categoryService.GetList(this.offset, this.filterName).subscribe((data:any) => {
         this.CategoriesList = data.categories;
         delete data.categories;
-        this.CategoriesListInfo = data;
-      }
-    )
+
+        this.pageSize = data.limit;
+        this.collectionSize = data.total;
+    })
   }
 
 }

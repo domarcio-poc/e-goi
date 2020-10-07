@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from 'src/app/shared/category.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryNewComponent } from './components/category-new/category-new.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CategoryNewComponent } from './components/category-new/category-new.com
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [CategoryService],
   bootstrap: [AppComponent]

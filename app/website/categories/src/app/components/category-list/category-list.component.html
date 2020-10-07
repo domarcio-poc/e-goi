@@ -42,14 +42,23 @@
                                 [(ngModel)]="category.name"
                                 (keyup.enter)="updateCategory(category.id, category.name)">
                             </td>
-                          <td class="align-middle">{{category.created_at}}</td>
-                          <td class="align-middle">{{category.updated_at}}</td>
+                          <td class="align-middle">{{ category.created_at | date : 'long' }}</td>
+                          <td class="align-middle">{{ category.updated_at | date : 'long' }}</td>
                           <td class="align-middle text-center">
                             <button (click)="removeCategory(category.id)" type="button" class="btn btn-danger btn-sm">Remove</button>
                           </td>
                       </tr>
                   </tbody>
               </table>
+
+            <ngb-pagination
+              [(page)]="offset"
+              [pageSize]="pageSize"
+              [collectionSize]="collectionSize"
+              [directionLinks]="false"
+              [rotate]="true"
+              (pageChange)="ngOnInit()">
+            </ngb-pagination>
           </div>
       </div>
   </div>
