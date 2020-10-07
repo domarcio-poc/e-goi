@@ -25,3 +25,9 @@ stop:
 remove:
 	docker rmi e-goi-api
 	docker rmi e-goi-website
+
+test:
+	docker run -it --rm --name e-goi-api-test \
+	-v ${PWD}/container/php/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini \
+	-e PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d/:/etc/php/7.4/fpm/conf.d/ \
+	e-goi-api /bin/sh
