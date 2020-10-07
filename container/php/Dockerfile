@@ -17,6 +17,4 @@ RUN composer install --no-interaction
 
 EXPOSE 80
 
-ENTRYPOINT [ "/bin/sh", "-c", "vendor/bin/phpunit -c module/Category/test/phpunit.xml --coverage-html www/coverage" ]
-
 CMD ["php", "-S", "0.0.0.0:80", "-t", "/app/www", "/app/www/index.php"]
