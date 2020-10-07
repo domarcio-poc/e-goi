@@ -90,6 +90,12 @@ Pronto, a aplicação já está disponível. O resultado final da app (Angular9 
 
 A API pode ser acessada via http://localhost:8080/category.
 
+Os testes da API são executados com o `make`, também.
+
+```shell
+$ user@egoi: make test
+```
+
 Caso queira pausar os containers e remover as imagens, execute os seguintes comandos:
 ```shell
 $ user@egoi: make stop
