@@ -12,9 +12,11 @@ export class CategoryListComponent implements OnInit {
   pageSize       = 5;
   collectionSize = 10;
   filterName     = '';
+  hasError       = false;
 
   CategoriesList: Category[];
   newCategoryName: string;
+  errorMessage: string;
 
   constructor(
     public categoryService: CategoryService
@@ -30,7 +32,11 @@ export class CategoryListComponent implements OnInit {
         data => {
           this.loadCategories();
         },
-        error => console.log(error));
+        error => {
+          this.errorMessage = error.error.message;
+          this.hasError = true;
+        }
+      );
   }
 
   removeCategory(id: number) {
@@ -39,7 +45,11 @@ export class CategoryListComponent implements OnInit {
         data => {
           this.loadCategories();
         },
-        error => console.log(error));
+        error => {
+          this.errorMessage = error;
+          this.hasError = true;
+        }
+      );
   }
 
   loadCategories() {

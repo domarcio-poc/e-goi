@@ -10,9 +10,12 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class CategoryNewComponent implements OnInit {
 
-  name: string;
   submitted = false;
+  hasError  = false;
+
+  name: string;
   categoryForm: FormGroup;
+  errorMessage: string;
 
   constructor(
     public categoryService: CategoryService,
@@ -32,11 +35,16 @@ export class CategoryNewComponent implements OnInit {
   }
 
   createCategory() {
-    this.categoryService.Create(this.categoryForm.value.name).subscribe(data => {
-      this.submitted = true;
-      this.gotoList();
-    },
-    error => console.log(error));
+    this.categoryService.Create(this.categoryForm.value.name).subscribe(
+      data => {
+        this.submitted = true;
+        this.gotoList();
+      },
+      error => {
+        this.errorMessage = error;
+        this.hasError = true;
+      }
+    );
   }
 
   gotoList() {

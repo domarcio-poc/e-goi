@@ -32,7 +32,11 @@ export class CategoryService {
   }
 
   Create(name: string): Observable<Object> {
-    return this.http.post(this.baseurl + '/category', {name: name});
+    return this.http.post(this.baseurl + '/category', {name: name})
+    .pipe(
+      retry(1),
+      catchError(this.errorHandl)
+    )
   }
 
   Update(id: number, name: string): Observable<Object> {
@@ -45,14 +49,15 @@ export class CategoryService {
 
   errorHandl(error) {
     let errorMessage = '';
-    if(error.error instanceof ErrorEvent) {
+
+    if (error.error instanceof ErrorEvent) {
       // Get client-side error
       errorMessage = error.error.message;
     } else {
       // Get server-side error
-      errorMessage = `Message: ${error.message}`;
+      errorMessage = error.error.message;
     }
-    console.log(errorMessage);
+
     return throwError(errorMessage);
  }
 }
