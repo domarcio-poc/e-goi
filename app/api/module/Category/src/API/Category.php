@@ -68,7 +68,7 @@ final class Category extends AbstractRestfulController
 
         return new JsonModel([
             'categories' => $categories,
-            'total'      => $all->count(),
+            'total'      => $all->getTotalItemCount(),
             'offset'     => $offset,
             'limit'      => $limit,
         ]);
