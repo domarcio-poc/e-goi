@@ -1,22 +1,18 @@
-FROM php:7.4-cli
+FROM php:7.4-cli-alpine3.12
 
-# Fix debconf warnings upon build
-ARG DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update -y
-RUN apt-get install zip -y
+RUN apk add --no-cache $PHPIZE_DEPS --update --no-cache libgd libpng-dev libjpeg-turbo-dev freetype-dev zip
 RUN pecl install xdebug-2.9.8
 RUN docker-php-ext-enable xdebug
-RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
+RUN mkdir -p /app
+RUN rm -rf /app
 ENV APP_DIR /app
 
 WORKDIR $APP_DIR
-VOLUME $APP_DIR
 
 COPY . .
 
-COPY --from=composer:1.10.13 /usr/bin/composer /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-interaction
 
 EXPOSE 80

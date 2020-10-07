@@ -4,50 +4,68 @@ declare(strict_types=1);
 
 namespace Category;
 
-use Ramsey\Uuid\Uuid;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\View\Model\JsonModel;
-use Zend\Http\Header\GenericHeader;
+use Zend\Mvc\ModuleRouteListener;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface
 {
-    /*
-    public function onDispatch(MvcEvent $e)
+    public function onBootstrap(MvcEvent $e)
     {
-        $cid = $e->getRequest()->getHeader('x-cid');
-        if (empty($cid)) {
-            $uuid = Uuid::uuid4();
-            $cid  = $uuid->toString();
-        }
+        $eventManager        = $e->getApplication()->getEventManager();
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
 
-        if ($cid instanceof GenericHeader) {
-            $cid = $cid->getFieldValue();
-        }
-
-        $response = $e->getResponse();
-
-        $headers = $e->getRequest()->getHeaders();
-        $headers->addHeaderLine('x-cid', $cid);
-
-        $viewModel = $e->getViewModel();
-        if ($viewModel instanceof JsonModel) {
-            $headers->addHeaderLine('Content-Type', 'application/json');
-        }
-
-        $response->setHeaders($headers);
-
-        return $response;
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError'], 0);
+        $eventManager->attach(MvcEvent::EVENT_RENDER_ERROR, [$this, 'onRenderError'], 0);
     }
 
-    publicCheckventManager = $e->getApplication()->getEventManager();
-        $eventManager->attach(
-            MvcEvent::EVENT_RENDER,
-            [$this, 'onDispatch'],
-        );
+    public function onDispatchError($e)
+    {
+        return $this->getJsonModelError($e);
     }
-    */
+
+    public function onRenderError($e)
+    {
+        return $this->getJsonModelError($e);
+    }
+
+    public function getJsonModelError($e)
+    {
+        $error = $e->getError();
+        if (! $error) {
+            return;
+        }
+
+        $exception = $e->getParam('exception');
+        $exceptionJson = [];
+        if ($exception) {
+            $exceptionJson = [
+                'class' => get_class($exception),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'message' => $exception->getMessage(),
+                'stacktrace' => $exception->getTraceAsString()
+            ];
+        }
+
+        $errorJson = [
+            'message'   => 'An error occurred during execution; please try again later.',
+            'error'     => $error,
+            'exception' => $exceptionJson,
+        ];
+        if ($error == 'error-router-no-match') {
+            $errorJson['message'] = 'Resource not found.';
+        }
+
+        $model = new JsonModel(['errors' => [$errorJson]]);
+
+        $e->setResult($model);
+
+        return $model;
+    }
 
     public function getAutoloaderConfig()
     {

@@ -36,7 +36,7 @@ return [
     ],
     'db' => [
         'inmemo' => [
-            'filename' => getcwd() . '/data/storage/categories.json',
+            'filename' => 'data/storage/categories.json',
         ],
     ],
 ];
