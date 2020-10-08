@@ -14,7 +14,6 @@
         "zendframework/zend-component-installer": "^1.0 || ^2.1",
         "zendframework/zend-mvc": "^3.1.1",
         "zendframework/zend-test": "^3.3",
-        "ramsey/uuid": "^4.1",
         "zendframework/zend-paginator": "^2.4",
         "zendframework/zend-filter": "^2.4",
         "zendframework/zend-inputfilter": "^2.4"

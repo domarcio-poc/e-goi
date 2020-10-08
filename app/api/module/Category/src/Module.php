@@ -10,7 +10,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\View\Model\JsonModel;
 use Zend\Mvc\ModuleRouteListener;
 
-class Module implements AutoloaderProviderInterface, ConfigProviderInterface
+final class Module implements AutoloaderProviderInterface, ConfigProviderInterface
 {
     public function onBootstrap(MvcEvent $e)
     {

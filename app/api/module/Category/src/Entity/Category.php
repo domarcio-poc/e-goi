@@ -6,7 +6,7 @@ namespace Category\Entity;
 
 use DateTime;
 
-class Category
+final class Category
 {
     private int $id;
 
